@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.queryParser.QueryParser.Operator;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.DisjunctionMaxQuery;
@@ -89,6 +90,7 @@ public class QueryStringQueryConstructor extends QueryConstructor {
           qparser.setFuzzyPrefixLength(fuzzy_prefix_length);
           qparser.setLowercaseExpandedTerms(lowercase_expanded_terms);
           qparser.setPhraseSlop(phrase_slop);
+          qparser.setDefaultOperator(Operator.valueOf(jsonQuery.optString("default_operator", "OR")));
           queries.add(qparser.parse(queryText));
         }
 
