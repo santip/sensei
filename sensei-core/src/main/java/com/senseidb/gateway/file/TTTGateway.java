@@ -129,7 +129,7 @@ class TTTDataProvider extends StreamDataProvider<JSONObject> {
                     o("last_update", o("$gt", offset))
                 )
             );
-            
+            logger.info("New changes returned " + cursor.size() + " rows");
             for (DBObject obj : cursor) {
                 queue.add(event(tipo, obj, null));
                 String lastUpdate = (String)obj.get("last_update");
@@ -204,6 +204,7 @@ class TTTDataProvider extends StreamDataProvider<JSONObject> {
             TTTGateway.logger.error("Failed setting event data", e);
         }
         
+        logger.info("about to enqueue " + json.get("tipo") + " : " + json.get("_id") + " (" + json.get("id") + ")");
         return new DataEvent<JSONObject>(json, (String) obj.get("last_update"));
     }
     
